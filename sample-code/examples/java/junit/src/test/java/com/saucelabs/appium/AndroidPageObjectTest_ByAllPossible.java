@@ -1,11 +1,5 @@
 package com.saucelabs.appium;
 
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.remote.MobileCapabilityType;
-
-import java.io.File;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +16,11 @@ import com.saucelabs.appium.page_object.android.ApiDemosListViewScreenChaided;
 import com.saucelabs.appium.page_object.android.ApiDemosListViewScreenSimple;
 import com.saucelabs.appium.page_object.ios.TestAppScreenSimple;
 
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.remote.MobileCapabilityType;
+
 /**
  * Please read about Page Object design pattern here:
  *  https://code.google.com/p/selenium/wiki/PageObjects
@@ -35,18 +34,19 @@ import com.saucelabs.appium.page_object.ios.TestAppScreenSimple;
  */
 public class AndroidPageObjectTest_ByAllPossible {
 
+	//private final String DEVICE = "Samsung_Galaxy_S6";
+	private final String DEVICE = "Samsung_Galaxy_S7";
+	
 	private WebDriver driver;
 	private ApiDemosListViewScreenByAllPossible apiDemosPageObject;
 	
 	@Before
 	public void setUp() throws Exception {
-		File classpathRoot = new File(System.getProperty("user.dir"));
-        File appDir = new File(classpathRoot, "../../../apps/ApiDemos/bin");
-	    File app = new File(appDir, "ApiDemos-debug.apk");
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
-	    capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
-	    capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
-	    driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+	    capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, DEVICE);
+	    capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE);
+	    capabilities.setCapability(MobileCapabilityType.APP, "/opt/apk/ApiDemos-debug.apk");
+	    driver = new AndroidDriver<MobileElement>(new URL("http://smule.qaprosoft.com:4444/wd/hub"), capabilities);
         
 	    apiDemosPageObject = new ApiDemosListViewScreenByAllPossible();
 		PageFactory.initElements(new AppiumFieldDecorator(driver, 5, TimeUnit.SECONDS), 
